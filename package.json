@@ -1,0 +1,31 @@
+{
+  "name": "ai-chat-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bswnthmdk/ai-chat-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bswnthmdk/ai-chat-bot/issues"
+  },
+  "homepage": "https://github.com/bswnthmdk/ai-chat-bot#readme",
+  "description": "",
+  "dependencies": {
+    "@tavily/core": "^0.7.7",
+    "dotenv": "^17.4.2",
+    "groq-sdk": "^1.5.0",
+    "openai": "^7.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

@@ -1,0 +1,51 @@
+/* Prevent unwanted horizontal scrolling */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Chat scrollbar */
+#chatContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+#chatContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#chatContainer::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 10px;
+}
+
+#chatContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Textarea scrollbar */
+#messageInput::-webkit-scrollbar {
+  width: 5px;
+}
+
+#messageInput::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
+}
+
+/* Remove default focus outline */
+#messageInput:focus {
+  outline: none;
+}
+
+/* Prevent textarea from showing resize handle */
+#messageInput {
+  overflow-y: auto;
+}
+
+/* Smooth scrolling for messages */
+#chatContainer {
+  scroll-behavior: smooth;
+}

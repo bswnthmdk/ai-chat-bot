@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AI Chat</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="bg-[#212121] text-white">
+    <div class="flex h-screen flex-col">
+      <!-- Header -->
+      <header class="flex h-14 items-center border-b border-[#333333] px-5">
+        <h1 class="text-lg font-semibold">AI Chat</h1>
+      </header>
+
+      <!-- Chat Area -->
+      <main id="chatContainer" class="flex-1 overflow-y-auto px-4 py-6">
+        <div class="mx-auto flex max-w-3xl flex-col gap-6">
+          <!-- AI Welcome Message -->
+          <div class="flex items-start gap-3">
+            <div
+              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-black"
+            >
+              AI
+            </div>
+
+            <div class="max-w-[80%] rounded-2xl bg-[#2f2f2f] px-4 py-3">
+              <p class="leading-6">Hello! How can I help you today?</p>
+            </div>
+          </div>
+
+          <!--
+                User message example:
+
+                <div class="flex justify-end">
+                    <div class="max-w-[80%] rounded-2xl bg-[#303030] px-4 py-3">
+                        <p class="leading-6">
+                            Hello!
+                        </p>
+                    </div>
+                </div>
+                -->
+        </div>
+      </main>
+
+      <!-- Input Area -->
+      <footer class="px-4 pb-5 pt-2">
+        <form id="chatForm" class="mx-auto max-w-3xl">
+          <div
+            class="flex items-end rounded-2xl border border-[#444444] bg-[#2f2f2f] px-4 py-3"
+          >
+            <textarea
+              id="messageInput"
+              rows="1"
+              placeholder="Message AI..."
+              class="max-h-40 flex-1 resize-none bg-transparent text-white outline-none placeholder:text-[#8e8e8e]"
+            ></textarea>
+
+            <button
+              id="sendButton"
+              type="submit"
+              class="ml-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-black transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="h-5 w-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 19V5m0 0l-6 6m6-6l6 6"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <p class="mt-2 text-center text-xs text-[#8e8e8e]">
+            AI can make mistakes. Check important information.
+          </p>
+        </form>
+      </footer>
+    </div>
+  </body>
+</html>
