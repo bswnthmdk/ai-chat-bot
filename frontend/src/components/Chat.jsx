@@ -18,7 +18,7 @@ function Chat() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/chat", {
+      const response = await fetch("http://localhost:3000/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +29,8 @@ function Chat() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to get response");
+        const errorText = await response.text();
+        throw new Error(`Backend error ${response.status}: ${errorText}`);
       }
 
       const data = await response.json();
