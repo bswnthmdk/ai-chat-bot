@@ -1,16 +1,9 @@
 import "dotenv/config";
 import Groq from "groq-sdk";
-import readline from "readline/promises";
 
 import { tavilyWebSearch, calculator } from "./tools.js";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false,
-});
 
 async function firstGroqCall(
   model,
@@ -29,7 +22,7 @@ async function firstGroqCall(
   });
 }
 
-async function chatBot(req) {
+export async function chatBot(req) {
   const model = "openai/gpt-oss-120b";
   const temperature = 0;
   const systemMessage = {
@@ -142,22 +135,3 @@ async function chatBot(req) {
     responseMessage = response.choices[0].message;
   }
 }
-
-async function main() {
-  while (true) {
-    const req = await rl.question("You: ");
-
-    if (req.toLowerCase() === "exit") {
-      console.log("Exiting....");
-      break;
-    }
-
-    const res = await chatBot(req);
-
-    console.log("Bot: " + res);
-  }
-
-  rl.close();
-}
-
-main();
