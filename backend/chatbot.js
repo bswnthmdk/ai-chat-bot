@@ -89,9 +89,17 @@ export async function chatBot(req, sessionId) {
 
   let responseMessage = response.choices[0].message; // Add 1st LLM response to conversation
 
+  const MAX_ITERATIONS = 5; // Set a maximum number of iterations to prevent infinite loops
+  let iterationCount = 0;
+
   while (true) {
     // Add LLM response to conversation
     messages.push(responseMessage);
+
+    iterationCount++;
+    if (iterationCount >= MAX_ITERATIONS) {
+      return "This is a FREE version of the AI Chat Bot. It can't answer this query.";
+    }
 
     // No tool call → final answer
     if (!responseMessage.tool_calls?.length) {
