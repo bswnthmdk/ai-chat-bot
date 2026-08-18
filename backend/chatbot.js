@@ -73,6 +73,7 @@ export async function chatBot(req, sessionId) {
 
   // Get cached conversation if it exists
   const cachedConversation = cache.get(sessionId);
+  console.log("Session Id: ", sessionId);
   console.log("Cached conversation:", cachedConversation);
   let messages;
   if (!cachedConversation) {

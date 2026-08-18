@@ -5,6 +5,9 @@ import ChatInput from "./ChatInput";
 function Chat() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [sessionId] = useState(() => crypto.randomUUID());
+
+  console.log("Session Id (frontend): ", sessionId);
 
   const sendMessage = async (text) => {
     if (!text.trim() || loading) return;
@@ -25,6 +28,7 @@ function Chat() {
         },
         body: JSON.stringify({
           message: text,
+          sessionId: sessionId,
         }),
       });
 
