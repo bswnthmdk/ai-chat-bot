@@ -1,28 +1,24 @@
 import "dotenv/config";
 import Groq from "groq-sdk";
+import NodeCache from "node-cache";
 
 import { tavilyWebSearch, calculator } from "./tools.js";
 
+const cache = new NodeCache({ stdTTL: 60 * 60 * 24 }); // Cache for 24 hours (in seconds)
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-async function firstGroqCall(
-  model,
-  temperature,
-  systemMessage,
-  userMessage,
-  tools,
-) {
+async function firstGroqCall(model, temperature, messages, tools) {
   return groq.chat.completions.create({
     model: model,
     temperature: temperature,
     tools: tools,
     tool_choice: "auto", // "auto" -> the model will decide when to use the tool, "manual" -> the model will not use the tool unless explicitly instructed; "define" -> same as "manual" but the model will not use the tool unless explicitly instructed
 
-    messages: [systemMessage, userMessage],
+    messages: messages,
   });
 }
 
-export async function chatBot(req) {
+export async function chatBot(req, sessionId) {
   const model = "openai/gpt-oss-120b";
   const temperature = 0;
   const systemMessage = {
@@ -75,17 +71,20 @@ export async function chatBot(req) {
     },
   ];
 
-  // Store the complete conversation
-  const messages = [systemMessage, userMessage];
+  // Get cached conversation if it exists
+  const cachedConversation = cache.get(sessionId);
+  console.log("Cached conversation:", cachedConversation);
+  let messages;
+  if (!cachedConversation) {
+    messages = [systemMessage, userMessage];
+  } else {
+    messages = [...cachedConversation, userMessage];
+  }
 
-  // 1. First LLM call
-  let response = await firstGroqCall(
-    model,
-    temperature,
-    systemMessage,
-    userMessage,
-    tools,
-  );
+  // Store the complete conversation
+
+  // 1. First LLM call, don't include the cached conversation
+  let response = await firstGroqCall(model, temperature, messages, tools);
 
   let responseMessage = response.choices[0].message; // Add 1st LLM response to conversation
 
@@ -95,6 +94,8 @@ export async function chatBot(req) {
 
     // No tool call → final answer
     if (!responseMessage.tool_calls?.length) {
+      // Save the complete conversation in cache
+      console.log("Saved cache: ", cache.set(sessionId, messages));
       return responseMessage.content;
     }
 

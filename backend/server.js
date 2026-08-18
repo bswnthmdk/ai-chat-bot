@@ -12,18 +12,18 @@ app.get("/api/", (req, res) => {
 });
 
 app.post("/api/chat", async (req, res) => {
-  const { message } = req.body;
+  const { message, sessionId } = req.body;
 
-  if (!message) {
+  if (!message.trim() || !sessionId.trim()) {
     res.status(400).json({
-      message: "Requested message field is Missing!",
+      message: "Requested message or sessionId is Missing!",
     });
     return;
   }
 
   console.log("Human:", message);
 
-  const result = await chatBot(message);
+  const result = await chatBot(message, sessionId);
 
   console.log("Bot:", result);
 
